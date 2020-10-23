@@ -1,0 +1,34 @@
+{% extends "bootstrap/base.html" %}
+{% block html_attribs %} lang="es" {% endblock %}
+{% block title %}
+  {% if title %}{{ title }} - Sist. Complementarios{% else %}Bienvenidos a Sist. Complementarios{% endif %}
+{% endblock %}
+
+{% block navbar %}
+<div class="navbar navbar-expand-lg">
+  <li class="navbar-brand">
+    <a class="nav-link" href="{{ url_for('admin.registro') }}">Registrarse!</a>
+  </li>
+</div>
+{% endblock %}
+
+{% block content %}
+  <div class="container">
+    {% with errores = get_flashed_messages(category_filter=["error"]) %}
+    {% if errores %}
+      {% for error in errores %}
+      <div class="alert alert-danger">{{ error }}</div>
+      {% endfor %}
+    {% endif %}
+    {% endwith %}
+    {% with messages = get_flashed_messages(category_filter=["ok"]) %}
+    {% if messages %}
+      {% for message in messages %}
+      <div class="alert alert-info">{{ message }}</div>
+      {% endfor %}
+    {% endif %}
+    {% endwith %}
+    {% block app_content %}
+    {% endblock %}
+  </div>
+{% endblock %}
