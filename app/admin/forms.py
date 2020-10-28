@@ -1,7 +1,9 @@
 from flask_wtf import FlaskForm
+from sqlalchemy.orm import query
 from wtforms import StringField, PasswordField, SubmitField, TextAreaField, SelectMultipleField
+from wtforms.ext.sqlalchemy.fields import QuerySelectMultipleField
 from wtforms.validators import DataRequired, Email, Length, EqualTo
-from .models import Grupo
+from .models import Grupo, Usuario
 
 class LoginForm(FlaskForm):
     email = StringField('Email', validators=[DataRequired(), Length(min=5, max=65)])
@@ -20,12 +22,18 @@ class GrupoForm(FlaskForm):
     descripcion = TextAreaField('Descripción')
     boton = SubmitField('Crear')
 
+def choice_grupo():
+    return Grupo.query.order_by(Grupo.nombre)
+
 class UsuarioEditForm(FlaskForm):
     nombre = StringField('Nombre Completo', validators=[DataRequired(), Length(min=5)])
     email = StringField('Email', validators=[DataRequired(), Email()])
-    contrasena = PasswordField('Contraseña', validators=[DataRequired()])
-    grupos = SelectMultipleField('Grupo(s)')
+    contrasena = StringField('Contraseña', validators=[DataRequired()])
+    grupos = QuerySelectMultipleField('Grupo(s)', query_factory=choice_grupo, get_label='nombre')
     boton = SubmitField('Actualizar!')
 
-
+    def __init__(self, *args, **kwargs):
+        kwargs['usuario'] = kwargs['obj']
+        super(UsuarioEditForm, self).__init__(*args, **kwargs)
+        self.grupos.default = lambda: kwargs['obj'].grupos
 

@@ -20,4 +20,7 @@ def create_app(settings_module='config.config'):
     from .admin import admin
     app.register_blueprint(admin)
 
+    from .mantenedores import mantenedores
+    app.register_blueprint(mantenedores)
+
     return app

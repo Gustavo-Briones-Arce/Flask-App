@@ -6,17 +6,19 @@
         <tr>
             <th scope="col">#</th>
             <th scope="col">Nombre</th>
-            <th scope="col">Correo</th>
-            <th scope="col">Handle</th>
+            <th scope="col">Email</th>
+            <th scope="col">Admin?</th>
         </tr>
         </thead>
         <tbody>
+        {% for usuario in usuarios %}
         <tr>
-            <th scope="row">1</th>
-            <td>Mark</td>
-            <td>Otto</td>
-            <td>@mdo</td>
+            <th scope="row">{{ usuario.id }}</th>
+            <td>{{ usuario.nombre }}</td>
+            <td>{{ usuario.email }}</td>
+            <td><input type="checkbox" disabled {% if usuario.es_admin: %}checked {% endif %}><td>
         </tr>
+        {% endfor %}
         </tbody>
     </table>
 {% endblock %}
