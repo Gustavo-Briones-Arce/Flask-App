@@ -3,7 +3,7 @@ from sqlalchemy.orm import query
 from wtforms import StringField, PasswordField, SubmitField, TextAreaField, SelectMultipleField
 from wtforms.ext.sqlalchemy.fields import QuerySelectMultipleField
 from wtforms.validators import DataRequired, Email, Length, EqualTo
-from .models import Grupo, Usuario
+from .models import Grupo
 
 class LoginForm(FlaskForm):
     email = StringField('Email', validators=[DataRequired(), Length(min=5, max=65)])

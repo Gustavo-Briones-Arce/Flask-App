@@ -1,9 +1,6 @@
-from operator import contains
-
-from flask.globals import request
 from app import login_manager
 from . import admin
-from flask import render_template, redirect, flash, url_for
+from flask import render_template, redirect, flash, url_for, request
 from .forms import LoginForm, RegistroForm, GrupoForm, UsuarioEditForm
 from .models import Grupo, Usuario
 
