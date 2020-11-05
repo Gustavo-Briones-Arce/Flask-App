@@ -1,3 +1,4 @@
+from wtforms.fields.core import BooleanField
 from .models import *
 from flask_wtf import FlaskForm
 from wtforms.fields import StringField, SubmitField, IntegerField, DecimalField
@@ -30,6 +31,9 @@ def choice_Encargado():
 
 def choice_Grupo_Zona_Participacion():
     return GrupoZonaParticipacion.query.all()
+
+def choice_Tipo_Encargado():
+    return TipoEncargado.query.all()
 
 
 class MeetForm(FlaskForm):
@@ -68,9 +72,44 @@ class GrupoZonaParticipacionForm(FlaskForm):
 
 class ZonaParticipacionForm(FlaskForm):
     grupo_zona = QuerySelectField('Grupo de Zona de Ṕarticipación', query_factory=choice_Grupo_Zona_Participacion, get_label='', allow_blank=True, blank_text='')
-    nombre = StringField('Nombre Zona', validators=[DataRequired('Ingrese Nombre'), Length(min=5)])
+    nombre = StringField('Nombre Zona Participación', validators=[DataRequired('Ingrese Nombre'), Length(min=5)])
     vta_neta = DecimalField('% de la Venta Neta', validators=[InputRequired('Ingrese valor')], places=2)
     gto_explotacion = DecimalField('% del Gasto de Explotación', validators=[InputRequired('Ingrese valor')], places=2)
     unico = DecimalField('% Unico', validators=[InputRequired('Ingrese valor')], places=2)
+    boton = SubmitField('Ingresar')
+
+class ZonaSimulcastingForm(FlaskForm):
+    nombre = StringField('Nombre Zona Simulcasting', validators=[DataRequired('Ingrese Nombre'), Length(min=5)])
+    boton = SubmitField('Ingresar')
+
+
+class ZonaDistribucionForm(FlaskForm):
+    nombre = StringField('Nombre Zona Distribución', validators=[DataRequired('Ingrese Nombre'), Length(min=5)])
+    boton = SubmitField('Ingresar')
+
+
+class TipoEncargadoForm(FlaskForm):
+    nombre = StringField('Nombre Tipo Encargado', validators=[DataRequired('Ingrese Nombre'), Length(min=5)])
+    estado = BooleanField('Estado')
+    boton = SubmitField('Ingresar')
+
+
+class EncargadoForm(FlaskForm):
+    tipo_encargado = QuerySelectField('Tipo Encargado', query_factory=choice_Tipo_Encargado, get_label='', allow_blank=True, blank_text='Seleccione Tipo Encargado')
+    rut = StringField('RUT', validators=[DataRequired('Ingrede RUT')])
+    nombre = StringField('Nombres', validators=[DataRequired('Ingrese nombres')])
+    apellidos = StringField('Apellidos', DataRequired('Ingrese apellidos'))
+    estado = BooleanField('Estado')
+    boton = SubmitField('Ingresar')
+
+
+class TipoAsociadoForm(FlaskForm):
+    nombre = StringField('Nombre Tipo Asociado', validators=[DataRequired('Ingrese Nombre'), Length(min=5)])
+    boton = SubmitField('Ingresar')
+
+
+class DivisionCategoriaForm(FlaskForm):
+    nombre = StringField('Categoria División', validators=[DataRequired('Ingrese Nombre'), Length(min=5)])
+    estado = BooleanField('Estado')
     boton = SubmitField('Ingresar')
 

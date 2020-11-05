@@ -1,9 +1,22 @@
 from __future__ import division
+
+from flask.globals import request
 from app.mantenedores.models import Asociacion, Comunidad, Division, Meet
 from . import mantenedores
 from app import login_manager
 from .forms import *
-from flask import flash, render_template
+from flask import flash, render_template, redirect, url_for
+
+
+@mantenedores.route('/meet')
+def meets():
+    meets = Meet.query.all()
+    return render_template('mantenedores/meets.html', title='Meets', meets=meets)
+
+@mantenedores.route('/meet/<int:id>')
+def meet(id):
+    meet = Meet.query.get_or_404(id)
+    return render_template('mantenedores/meet.html', title='Meet', meet=meet)
 
 @mantenedores.route('/meet/nuevo', methods=['GET', 'POST'])
 def meet_nuevo():
@@ -13,7 +26,30 @@ def meet_nuevo():
         meet.nombre = form.nombre.data
         meet.save()
         flash('Meet Guardado', 'ok')
+        return redirect(url_for('mantenedores.meets'))
     return render_template('mantenedores/form.html', title='Nuevo Meet', form=form)
+
+@mantenedores.route('/meet/<int:id>/editar', methods=['GET', 'POST'])
+def meet_editar(id):
+    meet = Meet.query.get_or_404(id)
+    if meet:
+        form = MeetForm()
+        if form.validate_on_submit():
+            meet.nombre = form.nombre.data
+            meet.save()
+            flash('Meet Editado', 'ok')
+            return redirect(url_for('mantenedores.meets'))
+        elif request.method == 'GET':
+            form.nombre.data = meet.nombre
+        return render_template('mantenedores/form.html', title='Editar Meet', form=form)
+
+@mantenedores.route('/meet/<int:id>/eliminar')
+def meet_eliminar(id):
+    meet = Meet.query.get_or_404(id)
+    if meet:
+        meet.delete()
+        flash('Meet Eliminado!', 'ok')
+        return redirect(url_for('mantenedores.meets'))
 
 @mantenedores.route('/asociacion/nuevo', methods=['GET', 'POST'])
 def asociacion_nuevo():

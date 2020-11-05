@@ -1,17 +1,6 @@
 from sqlalchemy.orm import backref
+from sqlalchemy.sql import func
 from app import db
-
-
-class Meet(db.Model):
-    __tablename__ = 'mantenedores_meet'
-
-    id = db.Column(db.Integer, primary_key=True)
-    nombre = db.Column(db.String(50), nullable=False)
-
-    def save(self):
-        if not self.id:
-            db.session.add(self)
-        db.session.commit()
 
 
 class Asociacion(db.Model):
@@ -25,6 +14,11 @@ class Asociacion(db.Model):
         if not self.id:
             db.session.add(self)
         db.session.commit()
+
+    def delete(self):
+        if self.id:
+            db.session.delete(self)
+            db.session.commit()
 
 
 class Comunidad(db.Model):
@@ -44,6 +38,11 @@ class Comunidad(db.Model):
         if not self.id:
             db.session.add(self)
         db.session.commit()
+
+    def delete(self):
+        if self.id:
+            db.session.delete(self)
+            db.session.commit()
 
 
 class Division(db.Model):
@@ -76,6 +75,11 @@ class Division(db.Model):
             db.session.add(self)
         db.session.commit()
 
+    def delete(self):
+        if self.id:
+            db.session.delete(self)
+            db.session.commit()
+
 
 class GrupoZonaParticipacion(db.Model):
     __tablename__ = 'mantenedores_grupo_zona_participacion'
@@ -84,6 +88,16 @@ class GrupoZonaParticipacion(db.Model):
     nombre = db.Column(db.String(50), nullable=False)
     glosa = db.Column(db.String(6), nullable=True)
     glosa_3_porciento = db.Column(db.String(25), nullable=False)
+
+    def save(self):
+        if not self.id:
+            db.session.add(self)
+        db.session.commit()
+
+    def delete(self):
+        if self.id:
+            db.session.delete(self)
+            db.session.commit()
 
 
 class ZonaParticipacion(db.Model):
@@ -101,6 +115,11 @@ class ZonaParticipacion(db.Model):
             db.session.add(self)
         db.session.commit()
 
+    def delete(self):
+        if self.id:
+            db.session.delete(self)
+            db.session.commit()
+
 
 class ZonaParticipacionTramo(db.Model):
     __tablename__ = 'mantenedores_zona_participacion_tramo'
@@ -111,12 +130,32 @@ class ZonaParticipacionTramo(db.Model):
     vta_final = db.Column(db.Integer, nullable=False)
     participacion = db.Column(db.Numeric, default=0)
 
+    def save(self):
+        if not self.id:
+            db.session.add(self)
+        db.session.commit()
+
+    def delete(self):
+        if self.id:
+            db.session.delete(self)
+            db.session.commit()
+
 
 class ZonaSimulcasting(db.Model):
     __tablename__ = 'mantenedores_zona_simulcasting'
 
     id = db.Column(db.Integer, primary_key=True)
     nombre = db.Column(db.String(50), nullable=False)
+
+    def save(self):
+        if not self.id:
+            db.session.add(self)
+        db.session.commit()
+
+    def delete(self):
+        if self.id:
+            db.session.delete(self)
+            db.session.commit()
 
 
 class ZonaDistribucion(db.Model):
@@ -125,6 +164,16 @@ class ZonaDistribucion(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     nombre = db.Column(db.String(50), nullable=False)
 
+    def save(self):
+        if not self.id:
+            db.session.add(self)
+        db.session.commit()
+
+    def delete(self):
+        if self.id:
+            db.session.delete(self)
+            db.session.commit()
+
 
 class TipoEncargado(db.Model):
     __tablename__ = 'mantenedores_tipo_encargado'
@@ -132,6 +181,16 @@ class TipoEncargado(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     nombre = db.Column(db.String(50), nullable=False)
     estado = db.Column(db.Boolean, default=0)
+
+    def save(self):
+        if not self.id:
+            db.session.add(self)
+        db.session.commit()
+
+    def delete(self):
+        if self.id:
+            db.session.delete(self)
+            db.session.commit()
 
 
 class Encargado(db.Model):
@@ -145,12 +204,32 @@ class Encargado(db.Model):
     apellidos = db.Column(db.String(50), nullable=False)
     estado = db.Column(db.Boolean, default=0)
 
+    def save(self):
+        if not self.id:
+            db.session.add(self)
+        db.session.commit()
+
+    def delete(self):
+        if self.id:
+            db.session.delete(self)
+            db.session.commit()
+
 
 class TipoAsociado(db.Model):
     __tablename__ = 'mantenedores_tipo_asociado'
 
     id = db.Column(db.Integer, primary_key=True)
     nombre = db.Column(db.String(50), nullable=False)
+
+    def save(self):
+        if not self.id:
+            db.session.add(self)
+        db.session.commit()
+
+    def delete(self):
+        if self.id:
+            db.session.delete(self)
+            db.session.commit()
 
 
 class DivisionCategoria(db.Model):
@@ -160,5 +239,72 @@ class DivisionCategoria(db.Model):
     nombre = db.Column(db.String(50), nullable=False)
     estado = db.Column(db.Boolean, default=0)
 
+    def save(self):
+        if not self.id:
+            db.session.add(self)
+        db.session.commit()
 
+    def delete(self):
+        if self.id:
+            db.session.delete(self)
+            db.session.commit()
+
+
+class Meet(db.Model):
+    __tablename__ = 'mantenedores_meet'
+
+    id = db.Column(db.Integer, primary_key=True)
+    nombre = db.Column(db.String(50), nullable=False)
+
+    def save(self):
+        if not self.id:
+            db.session.add(self)
+        db.session.commit()
+
+    def delete(self):
+        if self.id:
+            db.session.delete(self)
+            db.session.commit()
+
+
+class Sesion(db.Model):
+    __tablename__ = 'mantenedores_sesion'
+
+    sesion = db.Column(db.String(13), primary_key=True)
+    nro_sesion = db.Column(db.Integer, nullable=False)
+    fecha_sesion = db.Column(db.Date, nullable=False)
+    fecha_carga = db.Column(db.Date, nullable=False)
+    disco = db.Column(db.String(1), nullable=False)
+    fecha_creacion = db.Column(db.Date, default=func.now())
+    fecha_proceso = db.Column(db.Date, nullable=True)
+
+    def save(self):
+        if not self.id:
+            db.session.add(self)
+        db.session.commit()
+
+    def delete(self):
+        if self.id:
+            db.session.delete(self)
+            db.session.commit()
+
+
+class SesionDetalle(db.Model):
+    __tablename__ = 'mantenedores_sesion_detalle'
+
+    id = db.Column(db.Integer, primary_key=True)
+    sesion = db.Column(db.String(13), db.ForeignKey('mantenedores_sesion.sesion'), nullable=False)
+    meet = db.Column(db.Integer, db.ForeignKey('mantenedores_meet.id'), nullable=False)
+    administrador = db.Column(db.Integer, nullable=False)
+    operador = db.Column(db.Integer, nullable=False)
+
+    def save(self):
+        if not self.id:
+            db.session.add(self)
+        db.session.commit()
+
+    def delete(self):
+        if self.id:
+            db.session.delete(self)
+            db.session.commit()
 
