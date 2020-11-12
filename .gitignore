@@ -5,3 +5,6 @@ migrations
 zenv
 database.db
 settings.json
+requirements.txt
+Dockerfile
+uwsgi.ini

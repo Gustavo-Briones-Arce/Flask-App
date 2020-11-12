@@ -58,7 +58,7 @@ class Division(db.Model):
     tipo_asociado_id = db.Column(db.Integer, db.ForeignKey('mantenedores_tipo_asociado.id'), nullable=True)
     categoria_id = db.Column(db.Integer, db.ForeignKey('mantenedores_division_categoria.id'), nullable=True)
     encargado_id = db.Column(db.Integer, db.ForeignKey('mantenedores_encargado.id'), nullable=True)
-    estado = db.Column(db.Boolean, nullable=0)
+    estado = db.Column(db.Boolean, default=0)
     division = db.Column(db.String(11), nullable=False)
 
     def set_division(self):

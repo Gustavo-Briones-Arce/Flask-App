@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% block title %}{{ title }}{% endblock %}
+{% block app_content %}
+    <table class="table">
+        <thead>
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">Nombre</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for asociacion in asociaciones %}
+        <tr>
+            <th scope="row"><a href="{{ url_for('mantenedores.asociacion', id=asociacion.id) }}">{{ asociacion.id }}</a></th>
+            <td>{{ asociacion.nombre }}</td>
+        </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    <a href="{{ url_for('mantenedores.asociacion_nuevo') }}" class="btn btn-primary btn-lg" role="button" aria-pressed="true">Crear Nueva Asociacion</a>
+{% endblock %}
